@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radial Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="scene">
+    <h1 class="site-title">Our Products</h1>
+    <p class="site-subtitle">Tap the centre to explore</p>
+
+    <div class="radial-menu" id="radialMenu" aria-label="Product navigation">
+
+      <!-- ── Central trigger ── -->
+      <button class="menu-center" id="menuToggle" aria-expanded="false" aria-controls="menuItems" title="Open product menu">
+        <span class="center-ring"></span>
+        <img class="center-img" src="https://placehold.co/80x80/1a1a2e/e0c97f?text=🛍" alt="Products" />
+        <span class="center-label">Products</span>
+        <span class="center-icon" aria-hidden="true">＋</span>
+      </button>
+
+      <!-- ── 8 radial items ── -->
+      <ul class="menu-items" id="menuItems" role="menu">
+
+        <li class="menu-item" data-index="0" role="none">
+          <button class="item-btn" role="menuitem" style="--i:0">
+            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=1" alt="Category 1" />
+            <span class="item-label">Category 1</span>
+          </button>
+        </li>
+
+        <li class="menu-item" data-index="1" role="none">
+          <button class="item-btn" role="menuitem" style="--i:1">
+            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=2" alt="Category 2" />
+            <span class="item-label">Category 2</span>
+          </button>
+        </li>
+
+        <li class="menu-item" data-index="2" role="none">
+          <button class="item-btn" role="menuitem" style="--i:2">
+            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=3" alt="Category 3" />
+            <span class="item-label">Category 3</span>
+          </button>
+        </li>
+
+        <li class="menu-item" data-index="3" role="none">
+          <button class="item-btn" role="menuitem" style="--i:3">
+            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=4" alt="Category 4" />
+            <span class="item-label">Category 4</span>
+          </button>
+        </li>
+
+        <li class="menu-item" data-index="4" role="none">
+          <button class="item-btn" role="menuitem" style="--i:4">
+            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=5" alt="Category 5" />
+            <span class="item-label">Category 5</span>
+          </button>
+        </li>
+
+        <li class="menu-item" data-index="5" role="none">
+          <button class="item-btn" role="menuitem" style="--i:5">
+            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=6" alt="Category 6" />
+            <span class="item-label">Category 6</span>
+          </button>
+        </li>
+
+        <li class="menu-item" data-index="6" role="none">
+          <button class="item-btn" role="menuitem" style="--i:6">
+            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=7" alt="Category 7" />
+            <span class="item-label">Category 7</span>
+          </button>
+        </li>
+
+        <li class="menu-item" data-index="7" role="none">
+          <button class="item-btn" role="menuitem" style="--i:7">
+            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=8" alt="Category 8" />
+            <span class="item-label">Category 8</span>
+          </button>
+        </li>
+
+      </ul>
+    </div><!-- /.radial-menu -->
+
+    <!-- Decorative orbital rings -->
+    <div class="orbit orbit-1" aria-hidden="true"></div>
+    <div class="orbit orbit-2" aria-hidden="true"></div>
+  </div><!-- /.scene -->
+
+  <script src="menu.js"></script>
+</body>
+</html>
