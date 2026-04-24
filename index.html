@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,10 +15,16 @@
                 <a href="index.html"><img src="img/logo/logown.png" alt="WallnerNeubert"></a>
             </div>
             
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="nav-right-controls">
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
 
             <ul class="nav-links">
@@ -40,7 +46,7 @@
                 <div class="text-panel">
                     <h2>WIR SUCHEN DICH!</h2>
                     <p>Karriere bei Wallner & Neubert</p>
-                    <a href="termekek/csovek.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -52,7 +58,7 @@
                 <div class="text-panel">
                     <h2>W&N wird Teil der <br>SCHMIDT'S Gruppe</h2>
                     <p>Eine starke Partnerschaft für die Zukunft.</p>
-                    <a href="termekek/pumpak.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -64,55 +70,7 @@
                 <div class="text-panel">
                     <h2>Katalog 2026</h2>
                     <p>Preisstand 2026</p>
-                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="banner-slide" data-id="4">
-            <div class="slide-bg" style="background-image: url('img/banner/banner4.png');"></div>
-            <div class="banner-overlay"></div>
-            <div class="banner-content">
-                <div class="text-panel">
-                    <h2>Niederlassung Stams</h2>
-                    <p>in Betrieb</p>
-                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="banner-slide" data-id="5">
-            <div class="slide-bg" style="background-image: url('img/banner/banner5.png');"></div>
-            <div class="banner-overlay"></div>
-            <div class="banner-content">
-                <div class="text-panel">
-                    <h2>Sondermodelle</h2>
-                    <p>Schachtabdeckungen</p>
-                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="banner-slide" data-id="6">
-            <div class="slide-bg" style="background-image: url('img/banner/banner6.png');"></div>
-            <div class="banner-overlay"></div>
-            <div class="banner-content">
-                <div class="text-panel">
-                    <h2>PURASTREAM</h2>
-                    <p>Die neue Pumpstation</p>
-                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="banner-slide" data-id="7">
-            <div class="slide-bg" style="background-image: url('img/banner/banner7.png');"></div>
-            <div class="banner-overlay"></div>
-            <div class="banner-content">
-                <div class="text-panel">
-                    <h2>WN Service</h2>
-                    <p>Die Serviceabteilung</p>
-                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -121,75 +79,99 @@
             <span class="dot active" data-slide="1"></span>
             <span class="dot" data-slide="2"></span>
             <span class="dot" data-slide="3"></span>
-            <span class="dot" data-slide="4"></span>
-            <span class="dot" data-slide="5"></span>
-            <span class="dot" data-slide="6"></span>
-            <span class="dot" data-slide="7"></span>
         </div>
         
         <div class="nav-arrow prev-slide" data-action="prev" aria-hidden="true"><i class="fas fa-chevron-left"></i></div>
         <div class="nav-arrow next-slide" data-action="next" aria-hidden="true"><i class="fas fa-chevron-right"></i></div>
     </section>
 
-    <main class="radial-product-section reveal-effect">
-        
+    <section class="stats-section reveal-effect">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number"><span class="counter" data-target="150">0</span>+</div>
+                <div class="stat-text">Jahre Erfahrung</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number"><span class="counter" data-target="200">0</span>+</div>
+                <div class="stat-text">Aktive Partner</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number"><span class="counter" data-target="10000">0</span>+</div>
+                <div class="stat-text">Produkte</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="radial-product-section reveal-effect">
         <div class="section-heading" aria-hidden="false">
             <div class="section-title">Produkte</div>
             <div class="section-sep" aria-hidden="true"></div>
         </div>
 
         <div class="radial-container">
-            
             <div class="radial-center-display" id="radialCenter">
                 <div class="center-img-wrapper">
                     <img src="img/product/kicsi1.png" alt="Termék Kép" id="centerImg">
                 </div>
                 <h3 id="centerTitle">Schachtabdeckungen</h3>
-                <p id="centerDesc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <p id="centerDesc">Entdecken Sie unsere hochwertigen Lösungen für Schachtabdeckungen.</p>
                 <a href="#" id="centerLink" class="learn-more">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="radial-orbit" id="radialOrbit">
-                <div class="radial-item active" data-img="img/product/kicsi1.png" data-title="Schachtabdeckungen" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                <div class="radial-item active" data-img="img/product/kicsi1.png" data-title="Schachtabdeckungen" data-desc="Entdecken Sie unsere hochwertigen Lösungen für Schachtabdeckungen." data-link="#">
                     <img src="img/product/kicsi1.png" alt="Icon 1">
                 </div>
-                <div class="radial-item" data-img="img/product/kicsi2.jpg" data-title="Einlaufgitter und Abläufe" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                <div class="radial-item" data-img="img/product/kicsi2.jpg" data-title="Einlaufgitter und Abläufe" data-desc="Effiziente Wasserableitung mit unseren langlebigen Einlaufgittern." data-link="#">
                     <img src="img/product/kicsi2.jpg" alt="Icon 2">
                 </div>
-                <div class="radial-item" data-img="img/product/kicsi3.jpg" data-title="Kommunalguss, historische Gussprodukte" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                <div class="radial-item" data-img="img/product/kicsi3.jpg" data-title="Kommunalguss" data-desc="Robuste Gussprodukte für die städtische Infrastruktur." data-link="#">
                     <img src="img/product/kicsi3.jpg" alt="Icon 3">
                 </div>
-                <div class="radial-item" data-img="img/product/kicsi4.jpg" data-title="Linienentwässerung, Rinnen" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                <div class="radial-item" data-img="img/product/kicsi4.jpg" data-title="Linienentwässerung" data-desc="Professionelle Rinnensysteme für sichere Entwässerung." data-link="#">
                     <img src="img/product/kicsi4.jpg" alt="Icon 4">
                 </div>
-                <div class="radial-item" data-img="img/product/kicsi5.jpg" data-title="Schachtsysteme, Betonfertigteile" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                <div class="radial-item" data-img="img/product/kicsi5.jpg" data-title="Schachtsysteme" data-desc="Betonfertigteile von höchster Qualität für Ihr Projekt." data-link="#">
                     <img src="img/product/kicsi5.jpg" alt="Icon 5">
                 </div>
-                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Abwasserschieber, Rückstauverschlüsse" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Rückstauverschlüsse" data-desc="Zuverlässiger Schutz vor Rückstau im Abwassersystem." data-link="#">
                     <img src="img/product/kicsi6.jpg" alt="Icon 6">
                 </div>
-                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Abwassertechnik" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Abwassertechnik" data-desc="Innovative Lösungen für die moderne Abwasserbehandlung." data-link="#">
                     <img src="img/product/kicsi6.jpg" alt="Icon 7">
                 </div>
-                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Pumpentechnik" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Pumpentechnik" data-desc="Leistungsstarke Pumpen für unterschiedlichste Anforderungen." data-link="#">
                     <img src="img/product/kicsi6.jpg" alt="Icon 8">
                 </div>
-                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Regenwassertechnik, Versickerung, Retention" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
-                    <img src="img/product/kicsi6.jpg" alt="Icon 9">
-                </div>
-                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Wasserversorgung" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
-                    <img src="img/product/kicsi6.jpg" alt="Icon 10">
-                </div>
-                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Rohre" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
-                    <img src="img/product/kicsi6.jpg" alt="Icon 11">
-                </div>
-                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Service, Reparatur und Sonderbau" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
-                    <img src="img/product/kicsi6.jpg" alt="Icon 12">
-                </div>
             </div>
-            
         </div>
-    </main>
+    </section>
+
+    <div class="elegant-divider reveal-effect">
+        <div class="divider-line"></div>
+        <div class="divider-icon"><i class="fas fa-gem"></i></div>
+        <div class="divider-line"></div>
+    </div>
+
+    <section class="partner-section reveal-effect">
+        <div class="section-heading" style="margin-top: 10px;">
+            <div class="section-title">Unsere Partner</div>
+            <div class="section-sep" aria-hidden="true" style="width: 80px;"></div>
+        </div>
+        
+        <div class="partner-carousel-container" id="partnerCarousel">
+            <div class="partner-track" id="partnerTrack">
+                <div class="partner-slide"><img src="partner/p1.png" alt="Partner 1"></div>
+                <div class="partner-slide"><img src="partner/p1.png" alt="Partner 2"></div>
+                <div class="partner-slide"><img src="partner/p1.png" alt="Partner 3"></div>
+                <div class="partner-slide"><img src="partner/p1.png" alt="Partner 4"></div>
+                <div class="partner-slide"><img src="partner/p1.png" alt="Partner 5"></div>
+                <div class="partner-slide"><img src="partner/p1.png" alt="Partner 6"></div>
+                <div class="partner-slide"><img src="partner/p1.png" alt="Partner 7"></div>
+                <div class="partner-slide"><img src="partner/p1.png" alt="Partner 8"></div>
+            </div>
+        </div>
+    </section>
 
     <footer class="main-footer">
         <div class="footer-content">

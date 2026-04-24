@@ -1,88 +1,108 @@
 document.addEventListener('DOMContentLoaded', function() {
     
+    // --- 0. Sötét/Világos Téma Kezelés ---
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+    const themeIcon = themeToggle.querySelector('i');
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = htmlEl.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        htmlEl.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    });
+
+    function updateThemeIcon(theme) {
+        if(theme === 'dark') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+    }
+
     // --- 1. Hamburger Menü Logika ---
-    const hamburger = document.querySelector('.hamburger');
+    const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
-    const navItems = document.querySelectorAll('.nav-links li');
     const body = document.body;
     const mainHeader = document.getElementById('mainHeader');
 
     hamburger.addEventListener('click', () => {
         navLinks.classList.toggle('nav-active');
         hamburger.classList.toggle('active');
-        
-        if(navLinks.classList.contains('nav-active')){
-            body.style.overflow = 'hidden';
-        } else {
-            body.style.overflow = '';
-        }
-
-        navItems.forEach((link, index) => {
-            if (link.style.animation) {
-                link.style.animation = '';
-            } else {
-                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.2}s`;
-            }
-        });
+        body.style.overflow = navLinks.classList.contains('nav-active') ? 'hidden' : '';
     });
 
     navLinks.addEventListener('click', (e) => {
-        if (e.target === navLinks || e.target.classList.contains('nav-cta') || e.target.closest('.mobile-cta')) {
+        if (e.target.tagName === 'A' || e.target === navLinks) {
             navLinks.classList.remove('nav-active');
             hamburger.classList.remove('active');
             body.style.overflow = '';
-            navItems.forEach(link => link.style.animation = '');
         }
     });
 
-    // --- Scrolled hatás a navigációra ---
-    function handleScrollHeader() {
-        if (window.scrollY > 10) {
-            mainHeader.classList.add('scrolled');
-        } else {
-            mainHeader.classList.remove('scrolled');
-        }
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) mainHeader.classList.add('scrolled');
+        else mainHeader.classList.remove('scrolled');
+    });
+
+    // --- 2. Statisztika Számláló Animáció ---
+    const counters = document.querySelectorAll('.counter');
+    let hasCounted = false;
+
+    function startCounting() {
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const duration = 2000; 
+            const increment = target / (duration / 16); 
+            
+            let current = 0;
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.innerText = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.innerText = target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                }
+            };
+            updateCounter();
+        });
     }
-    handleScrollHeader();
-    window.addEventListener('scroll', handleScrollHeader);
+
+    const revealSections = document.querySelectorAll('.reveal-effect');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                if (entry.target.classList.contains('stats-section') && !hasCounted) {
+                    startCounting();
+                    hasCounted = true;
+                }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+    revealSections.forEach(sec => revealObserver.observe(sec));
 
 
-    // --- Banner Karusszel & SWIPE ---
+    // --- 3. Banner Karusszel & JAVÍTOTT SWIPE ---
     const slides = document.querySelectorAll('.banner-slide');
     const dots = document.querySelectorAll('.dot');
     const bannerContainer = document.querySelector('.banner-carousel');
-    const prevBtn = document.querySelector('.prev-slide');
-    const nextBtn = document.querySelector('.next-slide');
-    
     let currentSlide = 0;
     let slideInterval;
     let isAnimating = false;
 
-    function showSlide(index) {
-        if (index >= slides.length) index = 0;
-        else if (index < 0) index = slides.length - 1;
-
-        slides.forEach(slide => {
-            slide.classList.remove('active');
-            slide.style.transition = '';
-            slide.style.transform = '';
-            slide.style.opacity = '';
-            slide.style.zIndex = '';
-            slide.style.visibility = '';
-        });
-        dots.forEach(dot => dot.classList.remove('active'));
-        
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-        currentSlide = index;
-    }
-
-    function performSlideTransition(targetIndex, direction) {
-        if (isAnimating) return;
-        if (targetIndex >= slides.length) targetIndex = 0;
-        if (targetIndex < 0) targetIndex = slides.length - 1;
-        if (targetIndex === currentSlide) return;
-
+    function transitionSlide(targetIndex, direction) {
+        if (isAnimating || targetIndex === currentSlide) return;
         isAnimating = true;
         clearInterval(slideInterval);
 
@@ -95,156 +115,99 @@ document.addEventListener('DOMContentLoaded', function() {
         incoming.style.visibility = 'visible';
         incoming.style.zIndex = '3';
         incoming.classList.add('active'); 
-
         outgoing.style.zIndex = '2';
 
-        void incoming.offsetWidth;
+        void incoming.offsetWidth; 
 
-        const transitionVal = 'transform 480ms cubic-bezier(0.22, 1, 0.36, 1), opacity 480ms cubic-bezier(0.22, 1, 0.36, 1)';
-        incoming.style.transition = transitionVal;
-        outgoing.style.transition = transitionVal;
-
+        const trans = 'transform 480ms cubic-bezier(0.22, 1, 0.36, 1), opacity 480ms';
+        incoming.style.transition = trans;
+        outgoing.style.transition = trans;
         incoming.style.transform = 'translateX(0)';
         outgoing.style.transform = `translateX(${-direction * 100}%)`;
         outgoing.style.opacity = '0';
 
-        const cleanup = () => {
+        setTimeout(() => {
             outgoing.classList.remove('active');
-            outgoing.style.transition = '';
-            outgoing.style.transform = '';
-            outgoing.style.opacity = '';
-            outgoing.style.zIndex = '';
-            outgoing.style.visibility = '';
-
-            incoming.style.transition = '';
-            incoming.style.transform = '';
-            incoming.style.opacity = '';
-            incoming.style.zIndex = '';
-            incoming.style.visibility = '';
-
+            outgoing.style = ''; incoming.style = '';
             dots.forEach(d => d.classList.remove('active'));
-            if (dots[targetIndex]) dots[targetIndex].classList.add('active');
-
+            dots[targetIndex].classList.add('active');
             currentSlide = targetIndex;
             isAnimating = false;
-            resetAutoSlide();
-        };
-
-        const cleanupTimeout = setTimeout(cleanup, 520);
-
-        const onTransitionEnd = (e) => {
-            if (e.target === incoming) {
-                clearTimeout(cleanupTimeout);
-                incoming.removeEventListener('transitionend', onTransitionEnd);
-                cleanup();
-            }
-        };
-        incoming.addEventListener('transitionend', onTransitionEnd);
+            startAutoSlide();
+        }, 500);
     }
 
-    function nextSlide() { performSlideTransition((currentSlide + 1) % slides.length, 1); }
-    function prevSlideFunc() { performSlideTransition((currentSlide - 1 + slides.length) % slides.length, -1); }
+    function nextSlide() { transitionSlide((currentSlide + 1) % slides.length, 1); }
+    function prevSlideFunc() { transitionSlide((currentSlide - 1 + slides.length) % slides.length, -1); }
+    function startAutoSlide() { clearInterval(slideInterval); slideInterval = setInterval(() => { if (!isAnimating) nextSlide(); }, 6000); }
 
-    function startAutoSlide() {
-        slideInterval = setInterval(() => { if (!isAnimating) nextSlide(); }, 6000);
-    }
-    
-    function resetAutoSlide() {
-        clearInterval(slideInterval);
-        startAutoSlide();
-    }
-
-    dots.forEach(dot => {
-        dot.addEventListener('click', function() {
-            const slideIndex = parseInt(this.getAttribute('data-slide')) - 1;
-            if (slideIndex === currentSlide) return;
-            const direction = slideIndex > currentSlide ? 1 : -1;
-            performSlideTransition(slideIndex, direction);
+    dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => {
+            if(idx === currentSlide) return;
+            transitionSlide(idx, idx > currentSlide ? 1 : -1);
         });
     });
 
-    if(nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAutoSlide(); });
-    if(prevBtn) prevBtn.addEventListener('click', () => { prevSlideFunc(); resetAutoSlide(); });
-
     startAutoSlide();
 
-    // --- Drag / Swipe logika ---
     let isDragging = false;
-    let dragStartX = 0;
-    let dragCurrentX = 0;
-    let dragDelta = 0;
-    const dragThreshold = 60;
+    let dragStartX = 0, dragStartY = 0, dragCurrentX = 0, dragCurrentY = 0;
+    let isScrollingDirection = null;
 
-    if (bannerContainer) bannerContainer.style.cursor = 'grab';
-
-    function unifyEventX(e) {
-        if (e.type.startsWith('mouse')) return e.clientX;
-        if (e.changedTouches && e.changedTouches[0]) return e.changedTouches[0].clientX;
-        if (e.touches && e.touches[0]) return e.touches[0].clientX;
-        return 0;
-    }
+    function unifyEvent(e) { return e.changedTouches ? e.changedTouches[0] : e; }
 
     function onDragStart(e) {
         if (isAnimating) return;
         isDragging = true;
-        dragStartX = unifyEventX(e);
-        dragCurrentX = dragStartX;
-        dragDelta = 0;
+        isScrollingDirection = null;
+        const unified = unifyEvent(e);
+        dragStartX = unified.clientX;
+        dragStartY = unified.clientY;
         clearInterval(slideInterval);
-        if (bannerContainer) bannerContainer.style.cursor = 'grabbing';
-        e.preventDefault();
-
-        const activeBg = slides[currentSlide].querySelector('.slide-bg');
-        if (activeBg) activeBg.style.transition = 'none';
     }
 
     function onDragMove(e) {
         if (!isDragging || isAnimating) return;
-        dragCurrentX = unifyEventX(e);
-        dragDelta = dragCurrentX - dragStartX;
+        const unified = unifyEvent(e);
+        dragCurrentX = unified.clientX;
+        dragCurrentY = unified.clientY;
+        const diffX = dragCurrentX - dragStartX;
+        const diffY = dragCurrentY - dragStartY;
 
-        const activeBg = slides[currentSlide].querySelector('.slide-bg');
-        if (activeBg) {
-            const translateX = dragDelta * 0.35;
-            activeBg.style.transform = `translateX(${translateX}px) scale(1.02)`;
+        if (isScrollingDirection === null) {
+            if (Math.abs(diffY) > Math.abs(diffX)) isScrollingDirection = true;
+            else isScrollingDirection = false;
         }
 
+        if (isScrollingDirection) {
+            isDragging = false;
+            return;
+        }
+
+        e.preventDefault(); 
         const activeSlide = slides[currentSlide];
-        if (activeSlide) {
-            activeSlide.style.transition = 'none';
-            activeSlide.style.transform = `translateX(${dragDelta * 0.15}px)`;
-        }
+        activeSlide.style.transition = 'none';
+        activeSlide.style.transform = `translateX(${diffX * 0.2}px)`;
     }
 
-    function onDragEnd(e) {
-        if (!isDragging || isAnimating) return;
+    function onDragEnd() {
+        if (!isDragging || isScrollingDirection) {
+            isDragging = false;
+            startAutoSlide();
+            return;
+        }
         isDragging = false;
-        if (bannerContainer) bannerContainer.style.cursor = 'grab';
-
-        const activeBg = slides[currentSlide].querySelector('.slide-bg');
-        if (activeBg) {
-            activeBg.style.transition = 'transform 400ms cubic-bezier(0.22, 1, 0.36, 1)';
-            activeBg.style.transform = '';
-        }
+        const diffX = dragCurrentX - dragStartX;
         const activeSlide = slides[currentSlide];
-        if (activeSlide) {
-            activeSlide.style.transition = 'transform 420ms cubic-bezier(0.22, 1, 0.36, 1)';
-            activeSlide.style.transform = '';
-        }
+        if (activeSlide) activeSlide.style = ''; 
 
-        if (dragDelta < -dragThreshold) {
-            performSlideTransition((currentSlide + 1) % slides.length, 1);
-        } else if (dragDelta > dragThreshold) {
-            performSlideTransition((currentSlide - 1 + slides.length) % slides.length, -1);
-        } else {
-            showSlide(currentSlide);
-            resetAutoSlide();
-        }
-        dragDelta = 0;
+        if (diffX < -50) nextSlide();
+        else if (diffX > 50) prevSlideFunc();
+        else startAutoSlide();
     }
 
     if (bannerContainer) {
-        bannerContainer.addEventListener('touchstart', onDragStart, {passive: false});
+        bannerContainer.addEventListener('touchstart', onDragStart, {passive: true}); 
         bannerContainer.addEventListener('touchmove', onDragMove, {passive: false});
         bannerContainer.addEventListener('touchend', onDragEnd);
         bannerContainer.addEventListener('mousedown', onDragStart);
@@ -252,64 +215,31 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('mouseup', onDragEnd);
     }
 
-    // --- Görgetésre előtűnés (Scroll Reveal) a szekcióra ---
-    const revealSections = document.querySelectorAll('.reveal-effect');
-    const revealOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
-    };
 
-    const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, revealOptions);
-
-    revealSections.forEach(section => {
-        revealOnScroll.observe(section);
-    });
-
-    // --- RADIÁLIS MENÜ LOGIKA ---
+    // --- 4. RADIÁLIS MENÜ ---
     function setupRadialMenu() {
         const items = document.querySelectorAll('.radial-item');
         if (items.length === 0) return;
 
         function updatePositions() {
             const isMobile = window.innerWidth <= 768;
-            // A sugár, amin a pontok elhelyezkednek a középponthoz képest
-            const radius = isMobile ? 160 : 330; 
+            const radius = isMobile ? 155 : 330; 
             const angleStep = 360 / items.length;
 
             items.forEach((item, index) => {
-                // -90 fok hogy a legfelső pontból induljon (12 óra iránya)
                 const angle = (angleStep * index) - 90; 
-                // Fok konvertálása radiánba
                 const rad = angle * (Math.PI / 180);
-                
                 const x = Math.round(radius * Math.cos(rad));
                 const y = Math.round(radius * Math.sin(rad));
-
-                // Alap transzformáció elmentése
                 const baseTransform = `translate(${x}px, ${y}px)`;
                 item.dataset.baseTransform = baseTransform;
-                
-                // Aktuális class alapján alkalmazzuk a scale-t
-                if (item.classList.contains('active')) {
-                    item.style.transform = `${baseTransform} scale(1.2)`;
-                } else {
-                    item.style.transform = baseTransform;
-                }
+                item.style.transform = item.classList.contains('active') ? `${baseTransform} scale(1.15)` : baseTransform;
             });
         }
 
-        // Inicializálás és átméretezés figyelése
         updatePositions();
         window.addEventListener('resize', updatePositions);
 
-        // Kattintás események
         const centerImg = document.getElementById('centerImg');
         const centerTitle = document.getElementById('centerTitle');
         const centerDesc = document.getElementById('centerDesc');
@@ -317,59 +247,112 @@ document.addEventListener('DOMContentLoaded', function() {
         const centerDisplay = document.getElementById('radialCenter');
 
         items.forEach(item => {
-            
-            // CSS Hover hatásokhoz JS segítség a baseTransform miatt
-            item.addEventListener('mouseenter', () => {
-                if (!item.classList.contains('active')) {
-                    item.style.transform = `${item.dataset.baseTransform} scale(1.1)`;
-                }
-            });
-            item.addEventListener('mouseleave', () => {
-                if (!item.classList.contains('active')) {
-                    item.style.transform = item.dataset.baseTransform;
-                } else {
-                    item.style.transform = `${item.dataset.baseTransform} scale(1.2)`;
-                }
-            });
-
-            // Kattintás
             item.addEventListener('click', () => {
                 if (item.classList.contains('active')) return;
-
-                // Korábbi aktív levétele
                 items.forEach(i => {
                     i.classList.remove('active');
                     i.style.transform = i.dataset.baseTransform; 
                 });
-                
-                // Új aktív beállítása
                 item.classList.add('active');
-                item.style.transform = `${item.dataset.baseTransform} scale(1.2)`;
-
-                // Középső tartalom cseréje Fade animációval
+                item.style.transform = `${item.dataset.baseTransform} scale(1.15)`;
                 centerDisplay.style.opacity = 0;
-                
                 setTimeout(() => {
                     centerImg.src = item.dataset.img;
                     centerTitle.textContent = item.dataset.title;
                     centerDesc.textContent = item.dataset.desc;
                     centerLink.href = item.dataset.link;
                     centerDisplay.style.opacity = 1;
-                }, 300); // 300ms, mint a CSS opacity transition ideje
+                }, 300);
             });
         });
     }
-
-    // Futtatjuk a radiális beállítást
     setupRadialMenu();
-});
 
-// CSS Animáció injektálása
-const styleSheet = document.createElement("style");
-styleSheet.innerText = `
-@keyframes navLinkFade {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-`;
-document.head.appendChild(styleSheet);
+    // --- 5. PARTNER CAROUSEL (JAVÍTOTT: Hover = Stop, Click = Drag) ---
+    const partnerTrack = document.getElementById('partnerTrack');
+    const partnerContainer = document.getElementById('partnerCarousel');
+    
+    if (partnerTrack && partnerContainer) {
+        partnerTrack.innerHTML += partnerTrack.innerHTML;
+        
+        let currentPos = 0;
+        let animationId;
+        let isPartnerDragging = false;
+        let isHovered = false; // Új állapot a megállításhoz
+        let pDragStartX = 0;
+        let pPrevX = 0;
+
+        function animateMarquee() {
+            // Csak akkor mozog, ha nem visszük rá az egeret ÉS nem húzzuk
+            if (!isPartnerDragging && !isHovered) {
+                currentPos -= 1; 
+                if (currentPos <= -(partnerTrack.scrollWidth / 2)) {
+                    currentPos = 0;
+                }
+                partnerTrack.style.transform = `translateX(${currentPos}px)`;
+            }
+            animationId = requestAnimationFrame(animateMarquee);
+        }
+        
+        animateMarquee();
+
+        // Egér ráhúzás: Csak megállítja a mozgást
+        partnerContainer.addEventListener('mouseenter', () => {
+            isHovered = true;
+        });
+
+        // Egér elhagyása: Újraindítja a mozgást (ha nem húzzuk épp)
+        partnerContainer.addEventListener('mouseleave', () => {
+            isHovered = false;
+            if (!isPartnerDragging) {
+                // Biztosítjuk, hogy az animáció fusson
+            }
+        });
+
+        // Kattintás (Drag) kezdete
+        function onPartnerDragStart(e) {
+            isPartnerDragging = true;
+            partnerContainer.style.cursor = 'grabbing';
+            const unified = unifyEvent(e);
+            pDragStartX = unified.clientX;
+            pPrevX = pDragStartX;
+        }
+
+        // Húzás folyamata
+        function onPartnerDragMove(e) {
+            if (!isPartnerDragging) return;
+            
+            const unified = unifyEvent(e);
+            const currentX = unified.clientX;
+            const diffX = currentX - pPrevX;
+            
+            currentPos += diffX;
+            pPrevX = currentX;
+            
+            // Végtelenített pozíció korrekció húzás közben
+            if (currentPos > 0) currentPos = -(partnerTrack.scrollWidth / 2);
+            if (currentPos <= -(partnerTrack.scrollWidth / 2)) {
+                // Ha túlhúznánk balra, korrigálunk
+            }
+            
+            partnerTrack.style.transform = `translateX(${currentPos}px)`;
+        }
+
+        // Elengedés
+        function onPartnerDragEnd() {
+            if (!isPartnerDragging) return;
+            isPartnerDragging = false;
+            partnerContainer.style.cursor = 'grab';
+        }
+
+        // PC Események
+        partnerContainer.addEventListener('mousedown', onPartnerDragStart);
+        window.addEventListener('mousemove', onPartnerDragMove);
+        window.addEventListener('mouseup', onPartnerDragEnd);
+
+        // Mobil Események (Érintésnél nincs hover, ott egyből drag van)
+        partnerContainer.addEventListener('touchstart', onPartnerDragStart, {passive: true});
+        window.addEventListener('touchmove', onPartnerDragMove, {passive: true});
+        window.addEventListener('touchend', onPartnerDragEnd);
+    }
+});
