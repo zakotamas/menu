@@ -1,432 +1,460 @@
-/* ============================================================
-   RADIAL MENU — style.css
-   Aesthetic: Dark luxury / art deco orbital
-   ============================================================ */
-
-/* ── Design tokens ─────────────────────────────────────────── */
+/* Globális beállítások */
 :root {
-  --bg:           #0d0d1a;
-  --bg-glow:      #111128;
-  --gold:         #e0c97f;
-  --gold-dim:     #a8915a;
-  --gold-faint:   rgba(224,201,127,.08);
-  --white:        #f5f0e8;
-  --radius-orbit: clamp(140px, 30vmin, 210px); /* distance from center to item */
-  --size-center:  clamp(90px,  18vmin, 120px);
-  --size-item:    clamp(64px,  13vmin,  88px);
-  --dur-open:     0.55s;
-  --ease-spring:  cubic-bezier(.34,1.56,.64,1);
-  --font-display: 'Cinzel', serif;
-  --font-body:    'Raleway', sans-serif;
+    --primary-color: #004e92;
+    --secondary-color: #000428;
+    --accent-color: #00b4d8;
+    --text-color: #333;
+    --text-light: #666;
+    --background-light: #f8f9fa;
+    --card-bg: #ffffff;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --transition-speed: 0.3s;
 }
 
-/* ── Reset ─────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-ul { list-style: none; }
-button { background: none; border: none; cursor: pointer; font: inherit; }
-img { display: block; max-width: 100%; }
-
-/* ── Page ──────────────────────────────────────────────────── */
-html, body {
-  height: 100%;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--white);
-  font-family: var(--font-body);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #fff;
+    overflow-x: hidden;
 }
 
-/* ── Scene wrapper ─────────────────────────────────────────── */
-.scene {
+/* --- NAVIGÁCIÓ --- */
+.main-header {
+    background-color: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(0px);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 70px;
+    transition: backdrop-filter 0.3s ease, opacity 0.3s ease;
+}
+
+.main-header.scrolled {
+    backdrop-filter: blur(6px);
+    opacity: 0.98;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 100%;
+}
+
+.logo {
+  height: 56px;
+  z-index: 1200;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 2rem;
-  /* give breathing room for items that fly outward */
-  width: clamp(340px, 90vw, 600px);
-  aspect-ratio: 1;
-  justify-content: center;
 }
 
-/* ── Decorative orbit rings ────────────────────────────────── */
-.orbit {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(224,201,127,.10);
-  pointer-events: none;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-}
-.orbit-1 {
-  width: calc(var(--radius-orbit) * 2 + var(--size-item));
-  height: calc(var(--radius-orbit) * 2 + var(--size-item));
-  border-style: dashed;
-  animation: spin 40s linear infinite;
-}
-.orbit-2 {
-  width: calc(var(--radius-orbit) * 2 + var(--size-item) * 2.6);
-  height: calc(var(--radius-orbit) * 2 + var(--size-item) * 2.6);
-  opacity: 0.5;
-}
-@keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
-
-/* ── Headings ──────────────────────────────────────────────── */
-.site-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 4vw, 1.8rem);
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--gold);
-  position: relative;
-  z-index: 2;
-}
-.site-subtitle {
-  font-size: clamp(.7rem, 2.5vw, .9rem);
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--gold-dim);
-  opacity: .8;
-  position: relative;
-  z-index: 2;
+.logo img {
+  max-height: 56px;
+  width: auto;
+  display: block;
+  transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
-/* ── Radial menu container ─────────────────────────────────── */
-.radial-menu {
-  position: relative;
-  width: var(--size-center);
-  height: var(--size-center);
-  z-index: 10;
-  margin-top: 1rem;
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    transition: none;
 }
 
-/* ── Central button ────────────────────────────────────────── */
-.menu-center {
-  position: relative;
-  width: var(--size-center);
-  height: var(--size-center);
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #2a2040, #0d0d1a);
-  border: 2px solid var(--gold-dim);
-  box-shadow:
-    0 0 0 4px rgba(224,201,127,.08),
-    0 0 30px rgba(224,201,127,.15),
-    inset 0 0 20px rgba(0,0,0,.5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  transition:
-    border-color .3s,
-    box-shadow .3s,
-    transform .2s var(--ease-spring);
-  z-index: 20;
+.nav-links li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+    position: relative;
+    transition: color var(--transition-speed);
 }
 
-.menu-center:hover,
-.menu-center:focus-visible {
-  border-color: var(--gold);
-  box-shadow:
-    0 0 0 6px rgba(224,201,127,.12),
-    0 0 45px rgba(224,201,127,.30),
-    inset 0 0 20px rgba(0,0,0,.5);
-  transform: scale(1.06);
-  outline: none;
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width var(--transition-speed);
 }
 
-/* pulse ring on center */
-.center-ring {
-  position: absolute;
-  inset: -10px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(224,201,127,.25);
-  animation: pulse-ring 2.4s ease-out infinite;
-  pointer-events: none;
-}
-@keyframes pulse-ring {
-  0%   { transform: scale(.9); opacity: .6; }
-  70%  { transform: scale(1.25); opacity: 0; }
-  100% { transform: scale(1.25); opacity: 0; }
+.nav-links li a:hover::after {
+    width: 100%;
 }
 
-.center-img {
-  width: clamp(36px, 8vmin, 50px);
-  height: clamp(36px, 8vmin, 50px);
-  border-radius: 50%;
-  object-fit: cover;
-  transition: transform .3s;
-}
-.menu-center:hover .center-img { transform: scale(1.1) rotate(-5deg); }
-
-.center-label {
-  font-family: var(--font-display);
-  font-size: clamp(.45rem, 1.6vmin, .6rem);
-  letter-spacing: .12em;
-  color: var(--gold);
-  text-transform: uppercase;
+.nav-links li a:hover {
+    color: var(--primary-color);
 }
 
-/* ＋ / × toggle icon */
-.center-icon {
-  position: absolute;
-  bottom: 6px; right: 8px;
-  font-size: .85rem;
-  line-height: 1;
-  color: var(--gold-dim);
-  transition: transform .35s var(--ease-spring), color .2s;
-}
-.radial-menu.is-open .center-icon {
-  transform: rotate(45deg);
-  color: var(--gold);
+.mobile-cta { display: none; }
+
+/* HAMBURGER MENU STÍLUSOK */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 20px;
+    position: relative;
+    z-index: 1200;
 }
 
-/* ── Items list ────────────────────────────────────────────── */
-.menu-items {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 0; height: 0;
-  pointer-events: none; /* disabled until open */
+.bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin-bottom: 5px;
+    background-color: var(--secondary-color);
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
 }
 
-/* ── Individual item ───────────────────────────────────────── */
-.menu-item {
-  position: absolute;
-  top: 0; left: 0;
-  /* Each item is offset by CSS custom property --i (0–7) */
+.hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); background-color: #fff; }
+.hamburger.active .bar:nth-child(2) { opacity: 0; }
+.hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); background-color: #fff; }
+
+/* --- BANNER KARUSSZEL --- */
+.banner-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    height: 70vh;
+    min-height: 480px;
+    overflow: hidden;
+    background-color: #000;
 }
 
-/* 8 evenly-spaced angles, starting at top (−90°) */
-.menu-item:nth-child(1) { --angle: -90deg; }
-.menu-item:nth-child(2) { --angle: -45deg; }
-.menu-item:nth-child(3) { --angle:   0deg; }
-.menu-item:nth-child(4) { --angle:  45deg; }
-.menu-item:nth-child(5) { --angle:  90deg; }
-.menu-item:nth-child(6) { --angle: 135deg; }
-.menu-item:nth-child(7) { --angle: 180deg; }
-.menu-item:nth-child(8) { --angle: 225deg; }
-
-.item-btn {
-  position: relative;
-  width: var(--size-item);
-  height: var(--size-item);
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #201c38, #0d0d1a);
-  border: 1.5px solid var(--gold-dim);
-  box-shadow: 0 0 16px rgba(224,201,127,.10);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  /* position so center of button aligns with radial origin */
-  transform:
-    rotate(var(--angle))
-    translateY(calc(-1 * var(--radius-orbit)))
-    rotate(calc(-1 * var(--angle)))
-    translate(-50%, -50%);
-  transition:
-    transform .2s var(--ease-spring),
-    border-color .2s,
-    box-shadow .2s;
-
-  /* closed state overrides — handled by JS-added class */
+.banner-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1), transform 900ms cubic-bezier(0.22, 1, 0.36, 1), visibility 900ms;
+    z-index: 1;
+    will-change: opacity, transform;
 }
 
-.item-btn img {
-  width: clamp(28px, 6vmin, 40px);
-  height: clamp(28px, 6vmin, 40px);
-  border-radius: 50%;
-  object-fit: cover;
-  transition: transform .25s;
-}
-.item-btn:hover img,
-.item-btn:focus-visible img { transform: scale(1.12); }
-
-.item-label {
-  font-family: var(--font-body);
-  font-size: clamp(.42rem, 1.4vmin, .58rem);
-  font-weight: 500;
-  letter-spacing: .06em;
-  color: var(--gold-dim);
-  text-transform: uppercase;
-  white-space: nowrap;
-  pointer-events: none;
+.banner-slide.active {
+    opacity: 1; visibility: visible; transform: translateY(0); z-index: 2;
 }
 
-.item-btn:hover,
-.item-btn:focus-visible {
-  border-color: var(--gold);
-  box-shadow: 0 0 24px rgba(224,201,127,.35);
-  outline: none;
+.slide-bg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover; background-position: center;
+    transform: scale(1); transition: transform 7000ms cubic-bezier(0.25, 0.45, 0.45, 0.95);
+    will-change: transform;
+}
+.banner-slide.active .slide-bg { transform: scale(1.06); }
+
+.banner-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.12) 100%);
+    z-index: 2;
 }
 
-/* ── CLOSED state (default) — items sit on centre, invisible ─ */
-.menu-item {
-  opacity: 0;
-  transition:
-    opacity var(--dur-open) ease,
-    transform var(--dur-open) var(--ease-spring);
+.banner-content {
+    position: relative; z-index: 3; height: 100%; max-width: 1200px; margin: 0 auto; padding: 0 120px;
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-start; color: white; text-align: left;
 }
 
-/* Item is collapsed to center when closed */
-.menu-item .item-btn {
-  /* collapsed: no outward translation, just at center */
-  --collapsed: translate(-50%, -50%);
+.text-panel {
+    background: rgba(248, 249, 250, 0.12); padding: 22px 26px; border-radius: 10px;
+    backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); max-width: 760px; width: 100%;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25); color: #fff;
 }
 
-/* ── OPEN state ─────────────────────────────────────────────── */
-.radial-menu.is-open .menu-items {
-  pointer-events: auto;
+.banner-slide h2 {
+    font-family: 'Segoe UI', sans-serif; font-size: clamp(2.5rem, 5vw, 4.4rem); font-weight: 800; line-height: 1.1; margin-bottom: 10px;
+    opacity: 0; transform: translateY(30px); transition: all 0.8s ease 0.3s;
 }
 
-.radial-menu.is-open .menu-item {
-  opacity: 1;
+.banner-slide p {
+    font-size: clamp(1.1rem, 2vw, 1.25rem); margin-bottom: 18px; line-height: 1.6;
+    opacity: 0; transform: translateY(30px); transition: all 0.8s ease 0.5s;
 }
 
-/* stagger each item's open animation */
-.radial-menu.is-open .menu-item:nth-child(1) { transition-delay: .00s; }
-.radial-menu.is-open .menu-item:nth-child(2) { transition-delay: .04s; }
-.radial-menu.is-open .menu-item:nth-child(3) { transition-delay: .08s; }
-.radial-menu.is-open .menu-item:nth-child(4) { transition-delay: .12s; }
-.radial-menu.is-open .menu-item:nth-child(5) { transition-delay: .16s; }
-.radial-menu.is-open .menu-item:nth-child(6) { transition-delay: .20s; }
-.radial-menu.is-open .menu-item:nth-child(7) { transition-delay: .24s; }
-.radial-menu.is-open .menu-item:nth-child(8) { transition-delay: .28s; }
+.banner-slide.active h2, .banner-slide.active p, .banner-slide.active .cta-button { opacity: 1; transform: translateY(0); }
 
-/* closing stagger (reverse order) */
-.radial-menu:not(.is-open) .menu-item:nth-child(1) { transition-delay: .28s; }
-.radial-menu:not(.is-open) .menu-item:nth-child(2) { transition-delay: .24s; }
-.radial-menu:not(.is-open) .menu-item:nth-child(3) { transition-delay: .20s; }
-.radial-menu:not(.is-open) .menu-item:nth-child(4) { transition-delay: .16s; }
-.radial-menu:not(.is-open) .menu-item:nth-child(5) { transition-delay: .12s; }
-.radial-menu:not(.is-open) .menu-item:nth-child(6) { transition-delay: .08s; }
-.radial-menu:not(.is-open) .menu-item:nth-child(7) { transition-delay: .04s; }
-.radial-menu:not(.is-open) .menu-item:nth-child(8) { transition-delay: .00s; }
-
-/* ── Tooltip label that floats outside item ─────────────────── */
-.item-btn::after {
-  content: attr(data-label);
-  position: absolute;
-  /* position label on the "outward" side — JS sets --angle via data-angle */
-  white-space: nowrap;
-  font-family: var(--font-body);
-  font-size: clamp(.55rem, 1.8vmin, .72rem);
-  font-weight: 500;
-  letter-spacing: .09em;
-  color: var(--gold);
-  text-transform: uppercase;
-  background: rgba(13,13,26,.85);
-  padding: .22em .6em;
-  border-radius: 20px;
-  border: 1px solid rgba(224,201,127,.18);
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(.8);
-  transition: opacity .2s, transform .2s;
-  /* label position varies per item; set via nth-child below */
+.cta-button {
+    display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; background: var(--primary-color);
+    border: none; color: white; text-decoration: none; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.5px; font-size: 0.95rem; border-radius: 5px; transition: all 0.3s ease;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.18); z-index: 4;
 }
-.item-btn:hover::after,
-.item-btn:focus-visible::after {
-  opacity: 1;
-  transform: scale(1);
+.cta-button:hover { background: var(--accent-color); transform: translateY(-3px); }
+
+.carousel-indicators {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; gap: 12px;
 }
+.dot { height: 5px; width: 30px; background-color: rgba(255, 255, 255, 0.3); border-radius: 2px; cursor: pointer; transition: all 0.3s; }
+.dot.active { background-color: var(--accent-color); width: 50px; }
 
-/* ── Tooltip positions per slot ─────────────────────────────── */
-/* Top */
-.menu-item:nth-child(1) .item-btn::after { bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) scale(.8); }
-.menu-item:nth-child(1) .item-btn:hover::after,
-.menu-item:nth-child(1) .item-btn:focus-visible::after { transform: translateX(-50%) scale(1); }
+.nav-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(5px); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white;
+    font-size: 1.2rem; cursor: pointer; z-index: 11; transition: 0.3s; user-select: none;
+}
+.nav-arrow:hover { background: rgba(255,255,255,0.28); }
+.prev-slide { left: 20px; } .next-slide { right: 20px; }
 
-/* Top-right */
-.menu-item:nth-child(2) .item-btn::after { bottom: calc(100% + 8px); left: calc(100% + 6px); transform: scale(.8); }
-.menu-item:nth-child(2) .item-btn:hover::after,
-.menu-item:nth-child(2) .item-btn:focus-visible::after { transform: scale(1); }
+/* --- SECTION HEADING --- */
+.section-heading {
+    text-align: center; width: 100%; margin: 40px 0 20px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px; position: relative; z-index: 20;
+}
+.section-title { font-weight: 700; color: var(--primary-color); font-size: 1.05rem; letter-spacing: 0.6px; }
+.section-sep { width: 480px; max-width: 92%; height: 4px; background: var(--accent-color); border-radius: 2px; margin-top: 6px; }
 
-/* Right */
-.menu-item:nth-child(3) .item-btn::after { top: 50%; left: calc(100% + 8px); transform: translateY(-50%) scale(.8); }
-.menu-item:nth-child(3) .item-btn:hover::after,
-.menu-item:nth-child(3) .item-btn:focus-visible::after { transform: translateY(-50%) scale(1); }
-
-/* Bottom-right */
-.menu-item:nth-child(4) .item-btn::after { top: calc(100% + 8px); left: calc(100% + 6px); transform: scale(.8); }
-.menu-item:nth-child(4) .item-btn:hover::after,
-.menu-item:nth-child(4) .item-btn:focus-visible::after { transform: scale(1); }
-
-/* Bottom */
-.menu-item:nth-child(5) .item-btn::after { top: calc(100% + 8px); left: 50%; transform: translateX(-50%) scale(.8); }
-.menu-item:nth-child(5) .item-btn:hover::after,
-.menu-item:nth-child(5) .item-btn:focus-visible::after { transform: translateX(-50%) scale(1); }
-
-/* Bottom-left */
-.menu-item:nth-child(6) .item-btn::after { top: calc(100% + 8px); right: calc(100% + 6px); left: auto; transform: scale(.8); }
-.menu-item:nth-child(6) .item-btn:hover::after,
-.menu-item:nth-child(6) .item-btn:focus-visible::after { transform: scale(1); }
-
-/* Left */
-.menu-item:nth-child(7) .item-btn::after { top: 50%; right: calc(100% + 8px); left: auto; transform: translateY(-50%) scale(.8); }
-.menu-item:nth-child(7) .item-btn:hover::after,
-.menu-item:nth-child(7) .item-btn:focus-visible::after { transform: translateY(-50%) scale(1); }
-
-/* Top-left */
-.menu-item:nth-child(8) .item-btn::after { bottom: calc(100% + 8px); right: calc(100% + 6px); left: auto; transform: scale(.8); }
-.menu-item:nth-child(8) .item-btn:hover::after,
-.menu-item:nth-child(8) .item-btn:focus-visible::after { transform: scale(1); }
-
-/* ── Starfield background ────────────────────────────────────── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,.4) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 50% 70%, rgba(255,255,255,.35) 0%, transparent 100%),
-    radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 35% 90%, rgba(255,255,255,.25) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 65% 45%, rgba(255,255,255,.3) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
+/* --- RADIÁLIS MENÜ SZEKCIÓ --- */
+.radial-product-section {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden; /* Ne legyen vízszintes görgetés a kiálló orbit miatt */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease-out;
+}
+.radial-product-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Center glow behind menu */
-.scene::before {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 260px; height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(224,201,127,.07) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 1;
+.radial-container {
+    position: relative;
+    width: 100%;
+    max-width: 850px;
+    height: 750px; /* Elegendő tér a körnek */
+    margin: 40px auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* ── Mobile / small screen adjustments ─────────────────────── */
-@media (max-width: 480px) {
-  .site-title  { margin-bottom: .1rem; }
-  .site-subtitle { display: none; } /* save space on tiny screens */
-
-  /* On very small screens keep tooltip labels always visible BELOW the item */
-  .menu-item .item-btn::after {
-    display: none; /* hide hover tooltips, label is inside button instead */
-  }
-  /* make in-button label slightly bigger */
-  .item-label { font-size: .55rem; }
+/* Középső kijelző */
+.radial-center-display {
+    width: 380px;
+    height: 380px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    z-index: 5;
+    transition: opacity 0.3s ease-in-out;
+    position: relative;
 }
 
-/* ── Reduced motion ─────────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .center-ring { animation: none; }
-  .orbit-1     { animation: none; }
-  * { transition-duration: .01ms !important; }
+/* Egy animált, forgó díszítő gyűrű a középső rész körül */
+.radial-center-display::before {
+    content: '';
+    position: absolute;
+    top: -15px; left: -15px; right: -15px; bottom: -15px;
+    border: 2px dashed var(--accent-color);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: rotateDash 55s linear infinite;
+    pointer-events: none;
+}
+@keyframes rotateDash {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.center-img-wrapper {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--background-light);
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+}
+.center-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#centerTitle {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+#centerDesc {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    line-height: 1.5;
+    max-height: 65px;
+    overflow: hidden;
+}
+
+.learn-more {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.3s;
+}
+.learn-more:hover { gap: 12px; }
+
+/* Külső orbit elemek */
+.radial-orbit {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    pointer-events: none; /* A kattintás eléréséért (itemek visszaadják magukra) */
+}
+
+.radial-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 75px;
+    height: 75px;
+    margin: -37.5px; /* A pontos középre helyezéshez (szélesség fele) */
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    cursor: pointer;
+    pointer-events: auto; /* A konténer none, de az item auto */
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 3px solid transparent;
+    z-index: 10;
+}
+
+.radial-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    padding: 3px;
+}
+
+.radial-item:hover, .radial-item.active {
+    border-color: var(--accent-color);
+    z-index: 15;
+    box-shadow: 0 8px 25px rgba(0,180,216,0.5);
+}
+
+/* Tooltip a külső gombokhoz */
+.radial-item::after {
+    content: attr(data-title);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--secondary-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.radial-item:hover::after {
+    opacity: 1;
+    visibility: visible;
+    bottom: -40px;
+}
+
+/* FOOTER */
+.main-footer {
+    background-color: var(--secondary-color); color: white; padding: 40px 0; text-align: center; margin-top: 50px;
+}
+
+/* --- RESPONSIVE / MOBIL NÉZET --- */
+@media (max-width: 900px) {
+    .radial-container {
+        height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hamburger { display: block; }
+    .nav-links {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 4, 40, 0.98);
+        backdrop-filter: blur(5px); flex-direction: column; justify-content: center; align-items: center; gap: 40px;
+        z-index: 1100; opacity: 0; visibility: hidden; pointer-events: none; transition: all 0.4s ease-in-out;
+    }
+    .nav-links.nav-active { opacity: 1; visibility: visible; pointer-events: auto; }
+    .nav-links li a { font-size: 1.5rem; color: white; }
+    .mobile-cta { display: block; }
+    .mobile-cta a { background: var(--accent-color); color: white; padding: 12px 30px; border-radius: 25px; font-size: 1.2rem; }
+    .nav-arrow { display: none; }
+    
+    .banner-carousel { height: 72vh; min-height: 400px; max-width: 100%; }
+    .banner-slide h2 { font-size: 2.5rem; }
+    .banner-content { padding: 0 24px; }
+    .section-heading { margin: 18px 0 14px; }
+    .section-title { font-size: 1rem; }
+    .section-sep { width: 140px; height: 2px; }
+    .text-panel { padding: 16px; border-radius: 8px; max-width: 94%; }
+
+    /* Radial Menu Mobile Adjustments */
+    .radial-product-section { padding: 20px 10px 40px; }
+    .radial-container {
+        height: 450px;
+        margin-top: 20px;
+    }
+    .radial-center-display {
+        width: 250px;
+        height: 250px;
+        padding: 20px;
+    }
+    .radial-center-display::before {
+        top: -10px; left: -10px; right: -10px; bottom: -10px;
+    }
+    .center-img-wrapper {
+        width: 60px; height: 60px; margin-bottom: 10px;
+    }
+    #centerTitle {
+        font-size: 1rem; margin-bottom: 8px;
+    }
+    #centerDesc {
+        font-size: 0.8rem; margin-bottom: 10px; max-height: 50px;
+    }
+    .learn-more { font-size: 0.85rem; }
+    
+    .radial-item {
+        width: 50px; height: 50px; margin: -25px;
+    }
+    /* Elrejtjük a tooltipet mobilon, hogy ne lógjon ki a képernyőből kiszámíthatatlanul */
+    .radial-item::after { display: none; }
 }

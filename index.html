@@ -1,96 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Radial Menu</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ipari Alapanyagok - Modern Weboldal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-  <div class="scene">
-    <h1 class="site-title">Our Products</h1>
-    <p class="site-subtitle">Tap the centre to explore</p>
+    <header class="main-header" id="mainHeader">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html"><img src="img/logo/logown.png" alt="WallnerNeubert"></a>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
 
-    <div class="radial-menu" id="radialMenu" aria-label="Product navigation">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Referenzen</a></li>
+                <li><a href="#">Produkte</a></li>
+                <li><a href="#">Downloads</a></li>
+                <li><a href="#">Kontakt</a></li>
+                <li class="mobile-cta"><a href="#" class="nav-cta">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
 
-      <!-- ── Central trigger ── -->
-      <button class="menu-center" id="menuToggle" aria-expanded="false" aria-controls="menuItems" title="Open product menu">
-        <span class="center-ring"></span>
-        <img class="center-img" src="https://placehold.co/80x80/1a1a2e/e0c97f?text=🛍" alt="Products" />
-        <span class="center-label">Products</span>
-        <span class="center-icon" aria-hidden="true">＋</span>
-      </button>
+    <section class="banner-carousel" id="heroBanner">
+        <div class="banner-slide active" data-id="1">
+            <div class="slide-bg" style="background-image: url('img/banner/banner1.png');"></div>
+            <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <div class="text-panel">
+                    <h2>WIR SUCHEN DICH!</h2>
+                    <p>Karriere bei Wallner & Neubert</p>
+                    <a href="termekek/csovek.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
 
-      <!-- ── 8 radial items ── -->
-      <ul class="menu-items" id="menuItems" role="menu">
+        <div class="banner-slide" data-id="2">
+            <div class="slide-bg" style="background-image: url('img/banner/banner2.png');"></div>
+            <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <div class="text-panel">
+                    <h2>W&N wird Teil der <br>SCHMIDT'S Gruppe</h2>
+                    <p>Eine starke Partnerschaft für die Zukunft.</p>
+                    <a href="termekek/pumpak.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
 
-        <li class="menu-item" data-index="0" role="none">
-          <button class="item-btn" role="menuitem" style="--i:0">
-            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=1" alt="Category 1" />
-            <span class="item-label">Category 1</span>
-          </button>
-        </li>
+        <div class="banner-slide" data-id="3">
+            <div class="slide-bg" style="background-image: url('img/banner/banner3.png');"></div>
+            <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <div class="text-panel">
+                    <h2>Katalog 2026</h2>
+                    <p>Preisstand 2026</p>
+                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
 
-        <li class="menu-item" data-index="1" role="none">
-          <button class="item-btn" role="menuitem" style="--i:1">
-            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=2" alt="Category 2" />
-            <span class="item-label">Category 2</span>
-          </button>
-        </li>
+        <div class="banner-slide" data-id="4">
+            <div class="slide-bg" style="background-image: url('img/banner/banner4.png');"></div>
+            <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <div class="text-panel">
+                    <h2>Niederlassung Stams</h2>
+                    <p>in Betrieb</p>
+                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
 
-        <li class="menu-item" data-index="2" role="none">
-          <button class="item-btn" role="menuitem" style="--i:2">
-            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=3" alt="Category 3" />
-            <span class="item-label">Category 3</span>
-          </button>
-        </li>
+        <div class="banner-slide" data-id="5">
+            <div class="slide-bg" style="background-image: url('img/banner/banner5.png');"></div>
+            <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <div class="text-panel">
+                    <h2>Sondermodelle</h2>
+                    <p>Schachtabdeckungen</p>
+                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
 
-        <li class="menu-item" data-index="3" role="none">
-          <button class="item-btn" role="menuitem" style="--i:3">
-            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=4" alt="Category 4" />
-            <span class="item-label">Category 4</span>
-          </button>
-        </li>
+        <div class="banner-slide" data-id="6">
+            <div class="slide-bg" style="background-image: url('img/banner/banner6.png');"></div>
+            <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <div class="text-panel">
+                    <h2>PURASTREAM</h2>
+                    <p>Die neue Pumpstation</p>
+                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
 
-        <li class="menu-item" data-index="4" role="none">
-          <button class="item-btn" role="menuitem" style="--i:4">
-            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=5" alt="Category 5" />
-            <span class="item-label">Category 5</span>
-          </button>
-        </li>
+        <div class="banner-slide" data-id="7">
+            <div class="slide-bg" style="background-image: url('img/banner/banner7.png');"></div>
+            <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <div class="text-panel">
+                    <h2>WN Service</h2>
+                    <p>Die Serviceabteilung</p>
+                    <a href="termekek/beton.html" class="cta-button">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="carousel-indicators">
+            <span class="dot active" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+            <span class="dot" data-slide="4"></span>
+            <span class="dot" data-slide="5"></span>
+            <span class="dot" data-slide="6"></span>
+            <span class="dot" data-slide="7"></span>
+        </div>
+        
+        <div class="nav-arrow prev-slide" data-action="prev" aria-hidden="true"><i class="fas fa-chevron-left"></i></div>
+        <div class="nav-arrow next-slide" data-action="next" aria-hidden="true"><i class="fas fa-chevron-right"></i></div>
+    </section>
 
-        <li class="menu-item" data-index="5" role="none">
-          <button class="item-btn" role="menuitem" style="--i:5">
-            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=6" alt="Category 6" />
-            <span class="item-label">Category 6</span>
-          </button>
-        </li>
+    <main class="radial-product-section reveal-effect">
+        
+        <div class="section-heading" aria-hidden="false">
+            <div class="section-title">Produkte</div>
+            <div class="section-sep" aria-hidden="true"></div>
+        </div>
 
-        <li class="menu-item" data-index="6" role="none">
-          <button class="item-btn" role="menuitem" style="--i:6">
-            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=7" alt="Category 7" />
-            <span class="item-label">Category 7</span>
-          </button>
-        </li>
+        <div class="radial-container">
+            
+            <div class="radial-center-display" id="radialCenter">
+                <div class="center-img-wrapper">
+                    <img src="img/product/kicsi1.png" alt="Termék Kép" id="centerImg">
+                </div>
+                <h3 id="centerTitle">Schachtabdeckungen</h3>
+                <p id="centerDesc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <a href="#" id="centerLink" class="learn-more">Mehr erfahren <i class="fas fa-arrow-right"></i></a>
+            </div>
 
-        <li class="menu-item" data-index="7" role="none">
-          <button class="item-btn" role="menuitem" style="--i:7">
-            <img src="https://placehold.co/56x56/1a1a2e/e0c97f?text=8" alt="Category 8" />
-            <span class="item-label">Category 8</span>
-          </button>
-        </li>
+            <div class="radial-orbit" id="radialOrbit">
+                <div class="radial-item active" data-img="img/product/kicsi1.png" data-title="Schachtabdeckungen" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi1.png" alt="Icon 1">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi2.jpg" data-title="Einlaufgitter und Abläufe" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi2.jpg" alt="Icon 2">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi3.jpg" data-title="Kommunalguss, historische Gussprodukte" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi3.jpg" alt="Icon 3">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi4.jpg" data-title="Linienentwässerung, Rinnen" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi4.jpg" alt="Icon 4">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi5.jpg" data-title="Schachtsysteme, Betonfertigteile" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi5.jpg" alt="Icon 5">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Abwasserschieber, Rückstauverschlüsse" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi6.jpg" alt="Icon 6">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Abwassertechnik" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi6.jpg" alt="Icon 7">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Pumpentechnik" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi6.jpg" alt="Icon 8">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Regenwassertechnik, Versickerung, Retention" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi6.jpg" alt="Icon 9">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Wasserversorgung" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi6.jpg" alt="Icon 10">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Rohre" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi6.jpg" alt="Icon 11">
+                </div>
+                <div class="radial-item" data-img="img/product/kicsi6.jpg" data-title="Service, Reparatur und Sonderbau" data-desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry." data-link="#">
+                    <img src="img/product/kicsi6.jpg" alt="Icon 12">
+                </div>
+            </div>
+            
+        </div>
+    </main>
 
-      </ul>
-    </div><!-- /.radial-menu -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Wallner & Neubert Gesellschaft m.b.H.</p>
+        </div>
+    </footer>
 
-    <!-- Decorative orbital rings -->
-    <div class="orbit orbit-1" aria-hidden="true"></div>
-    <div class="orbit orbit-2" aria-hidden="true"></div>
-  </div><!-- /.scene -->
-
-  <script src="menu.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
