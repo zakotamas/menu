@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hu" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referenzen - Wallner & Neubert</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="subpages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header" id="mainHeader">
+        <nav class="navbar">
+            <div class="logo"><a href="index.html"><img src="img/logo/logown.png" alt="WallnerNeubert"></a></div>
+            <div class="nav-right-controls">
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="referenzen.html" style="color: var(--accent-color);">Referenzen</a></li>
+                <li><a href="produkte.html">Produkte</a></li>
+                <li><a href="downloads.html">Downloads</a></li>
+                <li><a href="kontakt.html">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="subpage-hero">
+        <h1>Unsere Referenzen</h1>
+        <p>Erfolgreiche Projekte und hochwertige Umsetzungen.</p>
+    </div>
+
+    <section class="page-section reveal-effect">
+        <div class="container">
+            <div class="gallery-grid" id="referenzGallery">
+                <div class="gallery-item" data-index="0" data-img="img/referenz/ref1.jpg" data-desc="Projekt Wien Hbf: Einbau von Schwerlast-Schachtabdeckungen.">
+                    <img src="img/referenz/ref1.jpg" alt="Referenz 1">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-item" data-index="1" data-img="img/referenz/ref2.jpg" data-desc="Linienentwässerung im Stadtzentrum Salzburg.">
+                    <img src="img/referenz/ref2.jpg" alt="Referenz 2">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-item" data-index="2" data-img="img/referenz/ref3.jpg" data-desc="Historische Gussprodukte - Altstadtsanierung."><img src="img/referenz/ref3.jpg" alt="Referenz 3"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                <div class="gallery-item" data-index="3" data-img="img/referenz/ref4.png" data-desc="Pumpstation Industriegebiet NÖ."><img src="img/referenz/ref4.png" alt="Referenz 4"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                <div class="gallery-item" data-index="4" data-img="img/referenz/ref5.jpg" data-desc="Regenwasserretentionsbecken Tirol."><img src="img/referenz/ref5.jpg" alt="Referenz 5"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                <div class="gallery-item" data-index="5" data-img="img/referenz/ref6.jpg" data-desc="Sonderguss für Brückenbauwerke."><img src="img/referenz/ref6.jpg" alt="Referenz 6"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                <div class="gallery-item" data-index="6" data-img="img/referenz/ref7.jpg" data-desc="Wasserversorgungssystem Alpenvorland."><img src="img/referenz/ref7.jpg" alt="Referenz 7"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                <div class="gallery-item" data-index="7" data-img="img/referenz/ref8.jpg" data-desc="Abwassertechnik Großprojekt Bgld."><img src="img/referenz/ref8.jpg" alt="Referenz 8"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                <div class="gallery-item" data-index="8" data-img="img/referenz/ref9.jpg" data-desc="Betonfertigteile für Logistikzentrum."><img src="img/referenz/ref9.jpg" alt="Referenz 9"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                <div class="gallery-item" data-index="9" data-img="img/referenz/ref10.jpg" data-desc="Rückstausicherung Wohnkomplex Ktn."><img src="img/referenz/ref10.jpg" alt="Referenz 10"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                <div class="gallery-item" data-index="10" data-img="img/referenz/ref11.jpg" data-desc="Reparatur und Sonderbau Kläranlage."><img src="img/referenz/ref11.jpg" alt="Referenz 11"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+                <div class="gallery-item" data-index="11" data-img="img/referenz/ref12.jpg" data-desc="Kommunalguss Straßenbauprojekt Stmk."><img src="img/referenz/ref12.jpg" alt="Referenz 12"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox-modal" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content-wrapper">
+            <div class="lightbox-nav prev"><i class="fas fa-chevron-left"></i></div>
+            <div class="lightbox-img-container">
+                <img src="" alt="Zoomed Reference" id="lightboxImg">
+                <div class="lightbox-desc" id="lightboxDesc"></div>
+            </div>
+            <div class="lightbox-nav next"><i class="fas fa-chevron-right"></i></div>
+        </div>
+    </div>
+
+    <footer class="main-footer"><div class="footer-content"><p>&copy; 2026 Wallner & Neubert Gesellschaft m.b.H.</p></div></footer>
+
+    <script src="script.js"></script>
+    <script src="subpages.js"></script>
+</body>
+</html>
